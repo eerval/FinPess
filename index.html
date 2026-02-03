@@ -160,7 +160,7 @@
     /* CEP loading */
     .cep-loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite;margin-left:8px}
 
-    /* NOVO ESTILO PARA FILTROS HORIZONTAIS */
+    /* FILTROS HORIZONTAIS */
     .filtros-container {
       display: flex;
       align-items: center;
@@ -199,7 +199,7 @@
       }
     }
 
-    /* NOVO ESTILO PARA CAMPOS PREENCHIDOS */
+    /* CAMPOS PREENCHIDOS */
     input.filled, select.filled, textarea.filled {
       font-weight: 600 !important;
       color: var(--primary) !important;
@@ -304,7 +304,7 @@
             <div class="card kpi receita" style="padding:18px;">
               <div class="kpi-head"><i class="fas fa-arrow-trend-up"></i><h3>Receitas (Mês)</h3></div>
               <div class="value" id="receitas-mes" data-animate>R$ 0,00</div>
-              <div class="kpi-sub">Atualizado hoje</div>
+              <div class="kpi-sub">Referente ao mês atual</div>
             </div>
           </div>
 
@@ -312,7 +312,7 @@
             <div class="card kpi despesa" style="padding:18px;">
               <div class="kpi-head"><i class="fas fa-arrow-trend-down"></i><h3>Despesas (Mês)</h3></div>
               <div class="value" id="despesas-mes" data-animate>R$ 0,00</div>
-              <div class="kpi-sub">Atualizado hoje</div>
+              <div class="kpi-sub">Referente ao mês atual</div>
             </div>
           </div>
         </div>
@@ -321,51 +321,56 @@
           <div class="col-8">
             <div class="card">
               <h3>Fluxo de Caixa (Últimos 6 meses)</h3>
-              <div class="chart-wrap"><canvas id="chartFluxo"></canvas></div>
-            </div>
-
-            <div class="card" style="margin-top:18px">
-              <h3>Últimos Lançamentos</h3>
-              <table>
-                <thead>
-                  <tr><th>Parceiro</th><th>Detalhes</th><th>Valor</th><th>Venc.</th><th>Tipo</th></tr>
-                </thead>
-                <tbody id="tbody-ultimos"></tbody>
-              </table>
+              <div class="chart-wrap" style="height:300px">
+                <canvas id="chartFluxo"></canvas>
+              </div>
             </div>
           </div>
 
           <div class="col-4">
             <div class="card">
-              <h3>Saldos por Conta</h3>
-              <div class="saldos" id="lista-saldos"></div>
-            </div>
-
-            <div class="grid" style="margin-top:18px">
-              <div class="col-6">
-                <div class="card">
-                  <div class="kpi-head">
-                    <i class="fas fa-money-bill-wave" style="color:#E74C3C;background:rgba(231,76,60,0.12)"></i>
-                    <h3>Contas a Pagar</h3>
-                  </div>
-                  <div class="value" id="contas-a-pagar-valor">R$ 0,00</div>
-                  <div class="kpi-sub" id="contas-a-pagar-info">Nenhuma conta pendente</div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="card">
-                  <div class="kpi-head">
-                    <i class="fas fa-hand-holding-usd" style="color:#2ECC71;background:rgba(46,204,113,0.12)"></i>
-                    <h3>Contas a Receber</h3>
-                  </div>
-                  <div class="value" id="contas-a-receber-valor">R$ 0,00</div>
-                  <div class="kpi-sub" id="contas-a-receber-info">Nenhuma conta pendente</div>
-                </div>
+              <h3>Despesas por Categoria (Mês)</h3>
+              <div class="chart-wrap" style="height:300px; display:flex; justify-content:center; align-items:center;">
+                <canvas id="chartCategorias"></canvas>
               </div>
             </div>
           </div>
         </div>
-      </section>
+        
+        <div class="grid" style="margin-top:18px">
+          <div class="col-6">
+            <div class="card" style="height:100%">
+              <h3>Saldos por Conta</h3>
+              <div class="saldos" id="lista-saldos"></div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="grid">
+                <div class="col-6">
+                    <div class="card">
+                      <div class="kpi-head">
+                        <i class="fas fa-money-bill-wave" style="color:#E74C3C;background:rgba(231,76,60,0.12)"></i>
+                        <h3>A Pagar</h3>
+                      </div>
+                      <div class="value" id="contas-a-pagar-valor">R$ 0,00</div>
+                      <div class="kpi-sub" id="contas-a-pagar-info">Nenhuma conta</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                      <div class="kpi-head">
+                        <i class="fas fa-hand-holding-usd" style="color:#2ECC71;background:rgba(46,204,113,0.12)"></i>
+                        <h3>A Receber</h3>
+                      </div>
+                      <div class="value" id="contas-a-receber-valor">R$ 0,00</div>
+                      <div class="kpi-sub" id="contas-a-receber-info">Nenhuma conta</div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        </section>
 
       <section id="lancamentos" class="screen" style="display:none">
         <div class="card">
@@ -560,7 +565,7 @@
         <div class="card">
           <h3>Parceiros</h3>
           <div class="filtros-container">
-            <button class="btn primary" onclick="abrirFormParceiro()">+ Novo Parceiro</button>
+            <button class="btn primary" onclick="abrirFormParceiro()">+ Nova Parceiro</button>
             <select id="filtro-tipo-parceiro" onchange="renderTabelaParceiros()">
               <option value="">Todos os tipos</option>
               <option value="fisica">Física</option>
@@ -667,6 +672,10 @@
     let dataParceiros = [];
     let dataFormasPagamento = [];
     let dataSetores = [];
+    
+    // Variáveis de controle dos gráficos (ATUALIZADO)
+    let chartFluxoObj = null;
+    let chartPizzaObj = null;
 
     // ---------- VARIÁVEIS GLOBAIS PARA LANÇAMENTOS ----------
     let mesAtual = new Date().getMonth();
@@ -676,6 +685,24 @@
     // ---------- SISTEMA DE CACHE ----------
     let cacheTimestamp = null;
     const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+
+    // Função Auxiliar de Data para Dashboard (NOVO - CORRIGIDO E ROBUSTO)
+    function isMesAtual(dataString) {
+        if (!dataString) return false;
+        try {
+            const partes = dataString.split('-'); 
+            if (partes.length < 3) return false;
+            
+            const ano = parseInt(partes[0]);
+            const mes = parseInt(partes[1]) - 1; 
+            
+            const hoje = new Date();
+            return mes === hoje.getMonth() && ano === hoje.getFullYear();
+        } catch (e) {
+            console.error("Erro ao ler data:", dataString);
+            return false;
+        }
+    }
 
     // Funções de cache
     function saveToCache(userId) {
@@ -707,7 +734,7 @@
         }
     }
 
-    // ---------- Sistema de Autenticação (MOVIDO PARA O TOPO) ----------
+    // ---------- Sistema de Autenticação ----------
     
     async function initializeAuth() {
         try {
@@ -771,7 +798,6 @@
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
             
-            // Salvar dados do usuário no Firestore
             await db.collection('usuarios').doc(user.uid).set({
                 nome: nome,
                 email: email,
@@ -779,7 +805,6 @@
                 ultimoAcesso: firebase.firestore.FieldValue.serverTimestamp()
             });
             
-            // Criar dados iniciais para o usuário
             await criarDadosIniciaisUsuario(user.uid);
             
         } catch (error) {
@@ -809,12 +834,10 @@
     async function onUserSignedIn(user) {
         console.log('👤 Usuário logado:', user.email);
         
-        // Atualizar interface
         document.getElementById('login-modal').style.display = 'none';
         document.getElementById('cadastro-modal').style.display = 'none';
         document.querySelector('.app').style.display = 'grid';
         
-        // Atualizar informações do usuário
         const userNameElement = document.getElementById('user-name');
         const userEmailElement = document.getElementById('user-email');
         const userAvatarElement = document.querySelector('.user-mini .avatar');
@@ -823,33 +846,25 @@
         if (userEmailElement) userEmailElement.textContent = user.email;
         if (userAvatarElement) userAvatarElement.textContent = user.email[0].toUpperCase();
         
-        // CORREÇÃO: Verificar se o documento do usuário existe antes de atualizar
         try {
             const userDoc = await db.collection('usuarios').doc(user.uid).get();
-            
             if (userDoc.exists) {
-                // Documento existe, atualizar último acesso
                 await db.collection('usuarios').doc(user.uid).update({
                     ultimoAcesso: firebase.firestore.FieldValue.serverTimestamp()
                 });
             } else {
-                // Documento não existe, criar um novo
                 await db.collection('usuarios').doc(user.uid).set({
                     nome: user.email.split('@')[0],
                     email: user.email,
                     dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
                     ultimoAcesso: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                
-                // Criar dados iniciais
                 await criarDadosIniciaisUsuario(user.uid);
             }
         } catch (error) {
             console.error('Erro ao verificar/atualizar usuário:', error);
-            // Continuar mesmo com erro para não bloquear o login
         }
         
-        // Carregar dados do usuário
         await loadUserData(user.uid);
     }
 
@@ -857,7 +872,6 @@
         console.log('🚪 Usuário deslogado');
         currentUser = null;
         
-        // Resetar dados
         dataSaldos = [];
         dataLancamentos = [];
         dataCategorias = [];
@@ -865,36 +879,27 @@
         dataFormasPagamento = [];
         dataSetores = [];
         
-		// Destruir gráfico
 		destroyChart();
-		
-        // Limpar cache
         invalidateCache();
-		
         
-        // Mostrar tela de login
         document.getElementById('login-modal').style.display = 'flex';
         document.querySelector('.app').style.display = 'none';
         
-        // Resetar formulários de login
         document.getElementById('login-email').value = '';
         document.getElementById('login-password').value = '';
         document.getElementById('login-btn').innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
         document.getElementById('login-btn').disabled = false;
         
-        // Resetar interface
         renderDashboard();
     }
 
     // ---------- SISTEMA DE NOTIFICAÇÕES ----------
     function showNotification(message, type = 'info', duration = 5000) {
-        // Remover notificação existente
         const existingNotification = document.getElementById('global-notification');
         if (existingNotification) {
             existingNotification.remove();
         }
 
-        // Criar nova notificação
         const notification = document.createElement('div');
         notification.id = 'global-notification';
         notification.style.cssText = `
@@ -913,7 +918,6 @@
             transition: all 0.3s ease;
         `;
 
-        // Cores baseadas no tipo
         const colors = {
             success: '#2ECC71',
             error: '#E74C3C',
@@ -926,20 +930,17 @@
 
         document.body.appendChild(notification);
 
-        // Animar entrada
         setTimeout(() => {
             notification.style.transform = 'translateX(0)';
             notification.style.opacity = '1';
         }, 100);
 
-        // Auto-remover após duração
         if (duration > 0) {
             setTimeout(() => {
                 hideNotification(notification);
             }, duration);
         }
 
-        // Clique para fechar
         notification.addEventListener('click', () => {
             hideNotification(notification);
         });
@@ -957,7 +958,6 @@
         }, 300);
     }
 
-    // Substituir os alerts por notificações
     function showError(message) {
         console.error('Erro:', message);
         showNotification(message, 'error', 7000);
@@ -975,7 +975,7 @@
     // ---------- FUNÇÕES PARA CONTAS A PAGAR/RECEBER DINÂMICAS ----------
     function calcularContasAPagar() {
         const hoje = new Date();
-        hoje.setHours(0, 0, 0, 0); // Considera apenas a data, sem hora
+        hoje.setHours(0, 0, 0, 0); 
         
         const contasAPagar = dataLancamentos.filter(l => {
             const dataVencimento = new Date(l.data);
@@ -986,7 +986,6 @@
                    dataVencimento >= hoje;
         });
         
-        // Ordenar por data de vencimento (mais próximas primeiro)
         contasAPagar.sort((a, b) => new Date(a.data) - new Date(b.data));
         
         const totalAPagar = contasAPagar.reduce((total, lancamento) => {
@@ -1014,7 +1013,6 @@
                    dataVencimento >= hoje;
         });
         
-        // Ordenar por data de vencimento (mais próximas primeiro)
         contasAReceber.sort((a, b) => new Date(a.data) - new Date(b.data));
         
         const totalAReceber = contasAReceber.reduce((total, lancamento) => {
@@ -1033,7 +1031,6 @@
         const contasAPagar = calcularContasAPagar();
         const contasAReceber = calcularContasAReceber();
         
-        // Atualizar Contas a Pagar
         const valorPagarElement = document.getElementById('contas-a-pagar-valor');
         const infoPagarElement = document.getElementById('contas-a-pagar-info');
         
@@ -1057,7 +1054,6 @@
             }
         }
         
-        // Atualizar Contas a Receber
         const valorReceberElement = document.getElementById('contas-a-receber-valor');
         const infoReceberElement = document.getElementById('contas-a-receber-info');
         
@@ -1082,14 +1078,12 @@
         }
     }
 
-
     // ---------- Dados Iniciais para Novos Usuários ----------
     
     async function criarDadosIniciaisUsuario(userId) {
         try {
             const batch = db.batch();
             
-            // Contas iniciais
             const contasIniciais = [
                 { 
                     nome: 'Conta Corrente', 
@@ -1114,23 +1108,10 @@
                 batch.set(docRef, conta);
             });
             
-            // Setores iniciais
             const setoresIniciais = [
-                { 
-                    descricao: 'Administrativo', 
-                    ativo: true,
-                    userId: userId
-                },
-                { 
-                    descricao: 'Comercial', 
-                    ativo: true,
-                    userId: userId
-                },
-                { 
-                    descricao: 'Produção', 
-                    ativo: true,
-                    userId: userId
-                }
+                { descricao: 'Administrativo', ativo: true, userId: userId },
+                { descricao: 'Comercial', ativo: true, userId: userId },
+                { descricao: 'Produção', ativo: true, userId: userId }
             ];
             
             setoresIniciais.forEach(setor => {
@@ -1138,53 +1119,12 @@
                 batch.set(docRef, setor);
             });
             
-            // Categorias iniciais ATUALIZADAS
             const categoriasIniciais = [
-                { 
-                    nome: 'Salário', 
-                    tipo: 'receita', 
-                    cor: '#2ECC71', 
-                    descricao: 'Salário e proventos',
-                    ativo: true,
-                    padrao: true,
-                    userId: userId 
-                },
-                { 
-                    nome: 'Alimentação', 
-                    tipo: 'despesa', 
-                    cor: '#E74C3C', 
-                    descricao: 'Gastos com alimentação',
-                    ativo: true,
-                    padrao: true,
-                    userId: userId 
-                },
-                { 
-                    nome: 'Transporte', 
-                    tipo: 'despesa', 
-                    cor: '#3498DB', 
-                    descricao: 'Transporte e combustível',
-                    ativo: true,
-                    padrao: true,
-                    userId: userId 
-                },
-                { 
-                    nome: 'Moradia', 
-                    tipo: 'despesa', 
-                    cor: '#9B59B6', 
-                    descricao: 'Aluguel, condomínio, IPTU',
-                    ativo: true,
-                    padrao: true,
-                    userId: userId 
-                },
-                { 
-                    nome: 'Investimentos', 
-                    tipo: 'receita', 
-                    cor: '#F39C12', 
-                    descricao: 'Rendimentos de investimentos',
-                    ativo: true,
-                    padrao: true,
-                    userId: userId 
-                }
+                { nome: 'Salário', tipo: 'receita', cor: '#2ECC71', descricao: 'Salário e proventos', ativo: true, padrao: true, userId: userId },
+                { nome: 'Alimentação', tipo: 'despesa', cor: '#E74C3C', descricao: 'Gastos com alimentação', ativo: true, padrao: true, userId: userId },
+                { nome: 'Transporte', tipo: 'despesa', cor: '#3498DB', descricao: 'Transporte e combustível', ativo: true, padrao: true, userId: userId },
+                { nome: 'Moradia', tipo: 'despesa', cor: '#9B59B6', descricao: 'Aluguel, condomínio, IPTU', ativo: true, padrao: true, userId: userId },
+                { nome: 'Investimentos', tipo: 'receita', cor: '#F39C12', descricao: 'Rendimentos de investimentos', ativo: true, padrao: true, userId: userId }
             ];
             
             categoriasIniciais.forEach(categoria => {
@@ -1192,13 +1132,12 @@
                 batch.set(docRef, categoria);
             });
             
-            // Parceiros iniciais
             const parceirosIniciais = [
                 { 
-                    nome: 'Cliente João Silva', 
+                    nome: 'Cliente Exemplo', 
                     tipo: 'fisica', 
                     ativo: true, 
-                    cpfCnpj: '123.456.789-00',
+                    cpfCnpj: '000.000.000-00',
                     telefone: '(11) 99999-9999',
                     userId: userId 
                 }
@@ -1209,7 +1148,6 @@
                 batch.set(docRef, parceiro);
             });
 
-            // Formas de Pagamento iniciais
             const formasPagamentoIniciais = [
                 { 
                     descricao: 'Cartão de Crédito', 
@@ -1234,64 +1172,42 @@
         }
     }
 
-    // ---------- Carregamento de Dados do Usuário ----------
-   
+	function getContaById(contaId) {
+		return dataSaldos.find(c => c.id === contaId);
+	}
 
-			// ---------- FUNÇÃO DE UTILIDADE PARA SALDO ----------
-			/**
-			 * Procura uma conta na memória local e a retorna.
-			 * @param {string} contaId O ID da conta a ser encontrada.
-			 */
-			function getContaById(contaId) {
-				return dataSaldos.find(c => c.id === contaId);
-			}
-			// ----------------------------------------------------
+	async function ajustarSaldoConta(contaId, valorMovimento) {
+		if (!contaId || valorMovimento === 0) return;
 
-			// ---------- FUNÇÃO PRINCIPAL DE MOVIMENTAÇÃO DE SALDO ----------
-			/**
-			 * Atualiza o valor de uma conta no Firebase e na memória local.
-			 * @param {string} contaId ID da conta a ser ajustada.
-			 * @param {number} valorMovimento O valor do movimento (positivo ou negativo).
-			 */
-			async function ajustarSaldoConta(contaId, valorMovimento) {
-				if (!contaId || valorMovimento === 0) return;
+		const conta = getContaById(contaId);
+		if (!conta) {
+			showError(`Conta ID ${contaId} não encontrada.`);
+			return;
+		}
 
-				const conta = getContaById(contaId);
-				if (!conta) {
-					showError(`Conta ID ${contaId} não encontrada.`);
-					return;
-				}
+		const novoValor = (conta.valor || 0) + valorMovimento;
 
-				// 1. Calcular o novo saldo local (Saldo Antigo + Movimento)
-				const novoValor = (conta.valor || 0) + valorMovimento;
+		try {
+			await db.collection('contas').doc(contaId).update({
+				valor: novoValor,
+				dataAtualizacao: firebase.firestore.FieldValue.serverTimestamp()
+			});
 
-				try {
-					// 2. Atualizar no Firebase
-					await db.collection('contas').doc(contaId).update({
-						valor: novoValor,
-						dataAtualizacao: firebase.firestore.FieldValue.serverTimestamp()
-					});
+			conta.valor = novoValor;
 
-					// 3. Atualizar na memória local (dataSaldos)
-					conta.valor = novoValor;
+			renderSaldos();
+			renderDashboard();
+			
+		} catch (error) {
+			console.error("❌ Erro ao ajustar saldo da conta:", error);
+			showError("Erro ao ajustar saldo: " + error.message);
+		}
+	}
 
-					// 4. Forçar a atualização visual no Dashboard
-					renderSaldos();
-					renderDashboard();
-					
-				} catch (error) {
-					console.error("❌ Erro ao ajustar saldo da conta:", error);
-					showError("Erro ao ajustar saldo: " + error.message);
-				}
-			}
-			// ----------------------------------------------------------------
-
-   
     async function loadUserData(userId) {
         try {
             console.log(`📊 Carregando dados do usuário: ${userId}`);
             
-            // Verificar cache
             const now = Date.now();
             const cachedData = localStorage.getItem(`finpess_cache_${userId}`);
             
@@ -1302,7 +1218,6 @@
                 renderAll();
                 atualizarCardsContasPendentes(); 
 
-				// Destruir gráfico anterior antes de criar novo
 				destroyChart();
 				setTimeout(() => initChart(), 100);
 
@@ -1311,21 +1226,14 @@
                 return;
             }
 
-            // Carregar do Firebase
             const loadCollection = async (collectionName, orderByField = null) => {
                 try {
                     let query = db.collection(collectionName).where('userId', '==', userId);
-                    
                     if (orderByField) {
                         query = query.orderBy(orderByField, 'desc');
                     }
-                    
                     const snapshot = await query.limit(1000).get();
-                    const dados = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    
-                    console.log(`✅ ${collectionName}: ${dados.length} registros carregados`);
-                    return dados;
-                    
+                    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 } catch (error) {
                     console.error(`❌ Erro ao carregar ${collectionName}:`, error);
                     return [];
@@ -1348,7 +1256,6 @@
                 loadCollection('setores')
             ]);
 
-            // Atribuir dados - CORREÇÃO: garantir que são apenas do usuário
             dataSaldos = contasData.filter(item => item.userId === userId);
             dataLancamentos = lancamentosData.filter(item => item.userId === userId);
             dataCategorias = categoriasData.filter(item => item.userId === userId);
@@ -1356,18 +1263,8 @@
             dataFormasPagamento = formasPagamentoData.filter(item => item.userId === userId);
             dataSetores = setoresData.filter(item => item.userId === userId);
 
-            // Salvar no cache
             saveToCache(userId);
             cacheTimestamp = now;
-
-            console.log('✅ Dados do usuário carregados:', {
-                contas: dataSaldos.length,
-                lancamentos: dataLancamentos.length,
-                categorias: dataCategorias.length,
-                parceiros: dataParceiros.length,
-                formasPagamento: dataFormasPagamento.length,
-                setores: dataSetores.length
-            });
 
             renderAll();
             atualizarCardsContasPendentes();
@@ -1389,7 +1286,6 @@
         const el = document.getElementById(id);
         if (el) el.style.display = 'block';
         
-        // Renderizar dados específicos da tela
         if (id === 'formas-pagamento') {
             renderTabelaFormasPagamento();
         } else if (id === 'parceiros') {
@@ -1403,35 +1299,86 @@
         } else if (id === 'lancamentos') {
             atualizarDisplayMes();
 		} else if (id === 'dashboard') {
-			// Recriar gráfico apenas se não existir
 			setTimeout(() => {
-				if (!chartObj) {
-					initChart();
-				}
+				initChart(); // Força renderização ao entrar no dashboard
 			}, 100);
 		}
     }
-    
 
     function renderAll() {
         renderDashboard();
         renderSaldos();
-        montarUltimosLancamentos();
+        // montarUltimosLancamentos(); // DESATIVADO: Função não é mais necessária no dashboard
         atualizarCardsContasPendentes();
         
-        // Animações
         document.querySelectorAll('.card').forEach(c => c.classList.add('visible'));
-        animateKPIs();
     }
 
-    function renderDashboard(){
-        document.getElementById('saldo-geral').textContent = formatMoney(calcSaldo());
-        document.getElementById('receitas-mes').textContent = formatMoney(sumByType('receita'));
-        document.getElementById('despesas-mes').textContent = formatMoney(sumByType('despesa'));
-        document.getElementById('saldo-data').textContent = 'Atualizado em ' + new Date().toLocaleDateString('pt-BR');
+    // ---------- DASHBOARD ATUALIZADO (LÓGICA DE KPI MENSAL + PARSEFLOAT) ----------
+    function renderDashboard() {
+        console.log("--- CÁLCULO DOS INDICADORES INICIADO ---");
+
+        // DATA DE HOJE PARA REFERÊNCIA
+        const hoje = new Date();
+        console.log("Mês atual do sistema:", hoje.getMonth() + 1, "/", hoje.getFullYear());
+
+        // 1. SALDO GERAL (Soma das Contas)
+        let saldoGeral = 0;
+        if (Array.isArray(dataSaldos)) {
+            saldoGeral = dataSaldos.reduce((total, conta) => {
+                // Converte texto para número para evitar erros
+                const valorNumerico = parseFloat(conta.valor);
+                const valorReal = isNaN(valorNumerico) ? 0 : valorNumerico;
+                
+                // Só soma se a conta estiver ativa
+                return (conta.ativo !== false) ? total + valorReal : total;
+            }, 0);
+        }
+        console.log("Saldo Geral Calculado:", saldoGeral);
+
+        // 2. FILTRAR LANÇAMENTOS DO MÊS
+        let receitasMes = 0;
+        let despesasMes = 0;
+
+        if (Array.isArray(dataLancamentos)) {
+            const lancamentosDoMes = dataLancamentos.filter(l => isMesAtual(l.data));
+            console.log("Lançamentos encontrados neste mês:", lancamentosDoMes.length);
+
+            // Calcular Receitas
+            receitasMes = lancamentosDoMes
+                .filter(l => l.tipo === 'receita' && !l.referenciaTransferenciaId)
+                .reduce((total, l) => {
+                    const val = parseFloat(l.valor);
+                    return total + (isNaN(val) ? 0 : val);
+                }, 0);
+
+            // Calcular Despesas
+            despesasMes = lancamentosDoMes
+                .filter(l => l.tipo === 'despesa' && !l.referenciaTransferenciaId)
+                .reduce((total, l) => {
+                    const val = parseFloat(l.valor);
+                    return total + (isNaN(val) ? 0 : val);
+                }, 0);
+        }
+
+        console.log("Receitas:", receitasMes, "Despesas:", despesasMes);
+
+        // 3. ATUALIZAR TELA
+        const elSaldo = document.getElementById('saldo-geral');
+        const elReceita = document.getElementById('receitas-mes');
+        const elDespesa = document.getElementById('despesas-mes');
+        const elData = document.getElementById('saldo-data');
+
+        if(elSaldo) elSaldo.textContent = formatMoney(saldoGeral);
+        if(elReceita) elReceita.textContent = formatMoney(receitasMes);
+        if(elDespesa) elDespesa.textContent = formatMoney(despesasMes);
+        if(elData) elData.textContent = 'Atualizado agora';
+
+        // Atualiza o restante se as funções existirem
+        if(typeof atualizarCardsContasPendentes === 'function') atualizarCardsContasPendentes();
+        if(typeof initChart === 'function') initChart();
         
-        // ATUALIZADO: Adicionar chamada para contas pendentes
-        atualizarCardsContasPendentes();
+        console.log("--- CÁLCULO FINALIZADO ---");
     }
 
     function renderSaldos(){
@@ -1479,7 +1426,6 @@
 
     // ========== NOVAS FUNÇÕES PARA LANÇAMENTOS ==========
 
-    // ---------- FUNÇÕES DE NAVEGAÇÃO POR MÊS ----------
     function atualizarDisplayMes() {
       const meses = [
         'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -1513,15 +1459,12 @@
 	function popularFiltroContas() {
     const filtroConta = document.getElementById('filtro-conta-lancamento');
     if (filtroConta) {
-        // Garantir que a lista de contas ativas do usuário é usada
         const contasAtivas = dataSaldos.filter(c => c.ativo && c.userId === currentUser.uid);
-        
         filtroConta.innerHTML = '<option value="">Todas as contas</option>' +
           contasAtivas.map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
     }
 }
 
-    // ---------- FUNÇÕES DE CARREGAMENTO E FILTRAGEM ----------
     function carregarLancamentosMes() {
       const primeiroDia = new Date(anoAtual, mesAtual, 1);
       const ultimoDia = new Date(anoAtual, mesAtual + 1, 0);
@@ -1561,10 +1504,6 @@
 		
 		renderizarTabelaLancamentos(lancamentosFiltrados);
 		atualizarResumoMes(lancamentosFiltrados);
-
-		// ************************************************
-		// NOVO: LÓGICA DE FEEDBACK VISUAL NOS FILTROS
-		// ************************************************
 		
 		const filtros = [
 			{ element: document.getElementById('filtro-tipo-lancamento'), value: tipo },
@@ -1576,8 +1515,6 @@
 
 		filtros.forEach(filtro => {
 			if (filtro.element) {
-				// Verifica se o valor é diferente de vazio ("") ou nulo, 
-				// indicando que um filtro foi aplicado.
 				if (filtro.value && filtro.value.trim() !== "") {
 					filtro.element.classList.add('filled');
 				} else {
@@ -1585,12 +1522,9 @@
 				}
 			}
 		});
-		// ************************************************
 	}
 	
     function atualizarResumoMes(lancamentos) {
-    
-		// Filtrar Lançamentos que NÃO SÃO PARTE de uma transferência
 		const lancamentosSemTransferencia = lancamentos.filter(l => !l.referenciaTransferenciaId);
 		
 		const receitas = lancamentosSemTransferencia
@@ -1609,7 +1543,6 @@
 		document.getElementById('saldo-mes-lancamentos').style.color = saldo >= 0 ? '#2ECC71' : '#E74C3C';
 	}
 	
-    // ---------- FUNÇÕES PARA CAMPOS PREENCHIDOS EM NEGRITO ----------
     function verificarCamposPreenchidos() {
         document.querySelectorAll('#modal-lancamento input, #modal-lancamento select, #modal-lancamento textarea').forEach(campo => {
             if (campo.value && campo.value.trim() !== '') {
@@ -1627,35 +1560,25 @@
         });
     }
 
-		// ---------- FUNÇÃO PARA REALIZAR LANÇAMENTO (CORRIGIDA SINTAXE) ----------
 		async function realizarLancamento(lancamentoId) {
 			const lancamento = dataLancamentos.find(l => l.id === lancamentoId);
 
 			if (!lancamento) return;
-			if (lancamento.pago) return; // Já está pago
+			if (lancamento.pago) return;
 
 			if (!confirm('Deseja marcar este lançamento como realizado?')) {
 				return;
 			}
 			
 			try {
-				// 1. Marca como pago no Firebase
 				await db.collection('lancamentos').doc(lancamentoId).update({
 					pago: true,
 					dataAtualizacao: firebase.firestore.FieldValue.serverTimestamp()
 				});
 				
-				// ************************************************
-				// NOVO: MOVIMENTAÇÃO DO SALDO DA CONTA (SIMPLIFICADO E RE-INCORPORADO)
-				// ************************************************
-
-				// 1. Calcular o valor do movimento (Receita é +, Despesa é -).
 				const valorMovimento = lancamento.valor * (lancamento.tipo === 'despesa' ? -1 : 1);
-
-				// 2. Apenas ajustamos o saldo da conta vinculada a este registro.
 				await ajustarSaldoConta(lancamento.contaId, valorMovimento);
 				
-				// 2. Atualizar localmente
 				lancamento.pago = true;
 				
 				invalidateCache();
@@ -1663,7 +1586,7 @@
 				atualizarCardsContasPendentes();
 				showSuccess('Lançamento marcado como realizado!');
 				
-			} catch (error) { // <-- CHAVE DE FECHAMENTO DO TRY E INÍCIO DO CATCH
+			} catch (error) {
 				console.error("Erro ao realizar lançamento:", error);
 				showError("Erro ao realizar o lançamento.");
 			}
@@ -1675,17 +1598,14 @@
       
       body.innerHTML = '';
       
-      // Ordenar por data (mais recente primeiro)
       lancamentos.sort((a, b) => new Date(b.data) - new Date(a.data));
       
       lancamentos.forEach(lancamento => {
         const tr = document.createElement('tr');
         
-        // Buscar informações relacionadas
         const categoria = dataCategorias.find(c => c.id === lancamento.categoriaId);
         const parceiro = dataParceiros.find(p => p.id === lancamento.parceiroId);
         
-        // BOTÃO REALIZAR - só aparece se não realizado
         const botaoRealizar = !lancamento.pago ? `
             <button class="btn small" onclick="realizarLancamento('${lancamento.id}')" 
                 style="background:#E8F5E8;color:#2ECC71;margin-left:4px" title="Marcar como realizado">
@@ -1728,7 +1648,6 @@
       });
     }
 
-    // ---------- FORMULÁRIO DE LANÇAMENTOS (REFATORADO) ----------
     function abrirFormLancamento(lancamentoId = null) {
       if (!currentUser) {
         showError('Faça login para continuar');
@@ -1738,7 +1657,6 @@
       lancamentoEditando = lancamentoId ? dataLancamentos.find(l => l.id === lancamentoId) : null;
       const body = document.getElementById('modal-lancamento-body');
       
-      // Filtrar dados ativos para os dropdowns - CORREÇÃO: garantir que pega apenas do usuário logado
       const categoriasAtivas = dataCategorias.filter(c => c.ativo && c.userId === currentUser.uid);
       const parceirosAtivos = dataParceiros.filter(p => p.ativo && p.userId === currentUser.uid);
       const contasAtivas = dataSaldos.filter(c => c.ativo && c.userId === currentUser.uid);
@@ -1880,12 +1798,10 @@
         </div>
       `;
       
-      // Inicializar campos baseados no tipo
       atualizarCamposPorTipo();
       atualizarCorValor();
       atualizarCampoParcelas();
       
-      // MUDANÇA 2: Adicionar verificação de campos preenchidos
       setTimeout(() => {
         verificarCamposPreenchidos();
         adicionarListenersCampos();
@@ -1896,12 +1812,10 @@
       document.getElementById('modal-lancamento').style.display = 'flex';
     }
 
-    // ---------- FUNÇÃO ATUALIZADA (UX DE TRANSFERÊNCIA) ----------
     function atualizarCamposPorTipo() {
       const tipo = document.getElementById('l_tipo').value;
       const contaDestinoContainer = document.getElementById('conta-destino-container');
       
-      // Elementos a serem controlados
       const containerDescricao = document.getElementById('container-descricao');
       const containerCategoria = document.getElementById('container-categoria');
       const containerFormaPagamento = document.getElementById('container-forma-pagamento');
@@ -1915,18 +1829,14 @@
       const labelContaOrigem = document.getElementById('label-conta-origem');
       const labelContaDestino = document.getElementById('label-conta-destino');
       
-      // Contêineres a serem ocultados na Transferência
       const camposOcultos = [containerCategoria, containerFormaPagamento, containerParceiro];
       
       if (tipo === 'transferencia') {
-        // VISIBILIDADE: Transferência
         contaDestinoContainer.classList.add('visible');
         
-        // OCULTAR CAMPOS IRRELEVANTES (INCLUINDO DESCRIÇÃO)
-        if (containerDescricao) containerDescricao.style.display = 'none'; // NOVO: OCULTA DESCRIÇÃO
+        if (containerDescricao) containerDescricao.style.display = 'none';
         camposOcultos.forEach(el => el ? el.style.display = 'none' : null);
         
-        // ÍCONES INTUITIVOS (NOVO)
         if (labelContaOrigem) {
             labelContaOrigem.innerHTML = 'Conta de Origem <i class="fas fa-arrow-up" style="color: #E74C3C; margin-left: 5px;"></i> *'; 
         }
@@ -1934,13 +1844,11 @@
             labelContaDestino.innerHTML = 'Conta de Destino <i class="fas fa-arrow-down" style="color: #3498DB; margin-left: 5px;"></i> *';
         }
         
-        // AUTO-PREENCHER STATUS (Visualmente "Não Realizado")
         if (statusSelect) {
-            statusSelect.value = 'false'; // Valor visual padrão
-            statusSelect.disabled = true; // Impedir alteração pelo usuário
+            statusSelect.value = 'false';
+            statusSelect.disabled = true;
         }
         
-        // Descrição e Categoria
         if (categoriaObrigatoriaSpan) {
             categoriaObrigatoriaSpan.textContent = '';
             categoriaObrigatoriaSpan.title = 'Opcional para transferências';
@@ -1952,31 +1860,24 @@
             descricaoInput.placeholder = 'Descrição (Opcional)';
         }
 
-        // Limpar observação se for a padrão de transferência para evitar redundância (será preenchido na gravação)
         if (!lancamentoEditando && observacoesTextarea) {
             observacoesTextarea.value = '';
         }
         
       } else {
-        // VISIBILIDADE: Receita/Despesa
         contaDestinoContainer.classList.remove('visible');
         
-        // MOSTRAR CAMPOS RELEVANTES
-        if (containerDescricao) containerDescricao.style.display = 'block'; // MOSTRAR
+        if (containerDescricao) containerDescricao.style.display = 'block';
         camposOcultos.forEach(el => el ? el.style.display = 'block' : null);
 
-        // Restaurar Labels
         if (labelContaOrigem) labelContaOrigem.innerHTML = 'Conta Financeira *';
         if (labelContaDestino) labelContaDestino.innerHTML = 'Conta de Destino *';
         
-        // Restaurar Status
         if (statusSelect) statusSelect.disabled = false;
         
-        // Categoria obrigatória
         if (categoriaObrigatoriaSpan) categoriaObrigatoriaSpan.textContent = '*';
         if (categoriaSelect) categoriaSelect.setAttribute('required', 'required');
 
-        // Limpar placeholder de Descrição
         if (descricaoInput) descricaoInput.placeholder = 'Descrição do lançamento';
       }
       
@@ -2011,7 +1912,6 @@
       if (formaPagamento && formaPagamento.permiteParcelamento) {
         parcelasContainer.classList.add('visible');
         
-        // Atualizar opções de parcelas baseado no máximo permitido
         const maxParcelas = formaPagamento.maxParcelas || 12;
         parcelasSelect.innerHTML = '';
         
@@ -2028,20 +1928,17 @@
       }
     }
 
-    // ---------- VALIDAÇÕES DE FORMULÁRIO APRIMORADAS (COM EXCEÇÃO DE DESCRIÇÃO) ----------
     function validarFormularioLancamento() {
         let isValid = true;
         const tipo = document.getElementById('l_tipo').value;
 
-        // Limpar erros anteriores
         document.querySelectorAll('.error-message').forEach(el => {
             el.classList.remove('visible');
         });
         
-        // Validar campos obrigatórios
         const campos = [
             { id: 'l_tipo', mensagem: 'Tipo é obrigatório' },
-            { id: 'l_descricao', mensagem: 'Descrição é obrigatória', ignoraTransferencia: true }, // NOVO: Ignora para Transferência
+            { id: 'l_descricao', mensagem: 'Descrição é obrigatória', ignoraTransferencia: true }, 
             { id: 'l_valor', mensagem: 'Valor deve ser maior que zero' },
             { id: 'l_data', mensagem: 'Data é obrigatória' },
             { id: 'l_pago', mensagem: 'Status é obrigatório' },
@@ -2049,7 +1946,6 @@
         ];
         
         campos.forEach(campo => {
-            // Se for Transferência, ignora a validação de Descrição.
             if (campo.ignoraTransferencia && tipo === 'transferencia') return; 
 
             const element = document.getElementById(campo.id);
@@ -2064,7 +1960,6 @@
             }
         });
         
-        // Validação específica para valor
         const valor = parseFloat(document.getElementById('l_valor').value);
         if (!valor || valor <= 0) {
             const errorElement = document.getElementById('error-valor');
@@ -2075,7 +1970,6 @@
             isValid = false;
         }
         
-        // Validação condicional da categoria
         const categoriaId = document.getElementById('l_categoria').value;
         if (tipo !== 'transferencia' && !categoriaId) {
             const errorElement = document.getElementById('error-categoria');
@@ -2086,7 +1980,6 @@
             isValid = false;
         }
         
-        // Validação para transferência
         if (tipo === 'transferencia') {
             const contaDestinoId = document.getElementById('l_conta_destino').value;
             const contaOrigemId = document.getElementById('l_conta').value;
@@ -2115,9 +2008,6 @@
 
     function coletarDadosFormularioLancamento() {
         const tipo = document.getElementById('l_tipo').value;
-        
-        // NOVO: Coleta o status. Se for transferência, o valor lógico 'pago' será forçado a true 
-        // na função criarLancamentoTransferencia, mas o valor que sai do formulário é 'false' (Não Realizado).
         let statusPago = document.getElementById('l_pago').value === 'true';
 
         return {
@@ -2142,7 +2032,6 @@
             dataAtualizacao: firebase.firestore.FieldValue.serverTimestamp()
         });
         
-        // Atualizar localmente
         const index = dataLancamentos.findIndex(l => l.id === lancamentoEditando.id);
         if (index !== -1) {
             dataLancamentos[index] = { ...dataLancamentos[index], ...dados };
@@ -2150,7 +2039,6 @@
     }
 
 	async function criarNovoLancamento(dados) {
-		
 		const lancamentoBaseComMeta = {
 			...dados,
 			userId: currentUser.uid, 
@@ -2159,15 +2047,10 @@
 		};
 		
 		if (lancamentoBaseComMeta.tipo === 'transferencia') {
-			// FLUXO PRINCIPAL DE TRANSFERÊNCIA: Cria dois registros em lote e move o saldo.
 			await criarLancamentoTransferencia(lancamentoBaseComMeta);
-			
 		} else if (lancamentoBaseComMeta.numeroParcelas > 1) {
-			// Lógica de parcelamento (para Receita/Despesa parcelada)
 			await criarLancamentosParcelados(lancamentoBaseComMeta); 
-			
 		} else {
-			// Lançamento Único (Receita/Despesa simples)
 			const docRef = await db.collection('lancamentos').add(lancamentoBaseComMeta);
 			lancamentoBaseComMeta.id = docRef.id;
 			dataLancamentos.unshift(lancamentoBaseComMeta); 
@@ -2178,95 +2061,66 @@
 		}
 	}
 	
-//-------------⚠️ atenção Correção ⚠️ -------------------------------------------------------------//
-	
-// ---------- FUNÇÃO REFATORADA: CRIA DUPLO REGISTRO DE TRANSFERÊNCIA COM AJUSTE DE SALDO ----------
 	async function criarLancamentoTransferencia(lancamentoBase) {
 		const batch = db.batch();
 		const novosLancamentos = [];
 		
-		// NOVO: Forçar o status pago como verdadeiro no momento de salvar (operação atômica)
 		lancamentoBase.pago = true;
 		
 		const contaOrigem = getContaById(lancamentoBase.contaId)?.nome || 'Conta Origem';
 		const contaDestino = getContaById(lancamentoBase.contaDestinoId)?.nome || 'Conta Destino';
 		
-		// Gerar um ID único para vincular os dois lançamentos
 		const transferenciaGrupoId = db.collection('lancamentos').doc().id; 
 		
-		// --- 1. Lançamento de SAÍDA (Despesa na Conta de Origem) ---
 		const saidaDocRef = db.collection('lancamentos').doc();
 		const lancamentoSaida = {
 			...lancamentoBase,
 			id: saidaDocRef.id,
-			tipo: 'despesa', // Tipo de movimentação é Despesa
-			contaId: lancamentoBase.contaId, // Conta de Origem
-			
-			// GARANTINDO A DATA CORRETA
+			tipo: 'despesa',
+			contaId: lancamentoBase.contaId,
 			data: lancamentoBase.data, 
-			
-			// Campos nulos/limpos
 			contaDestinoId: null, 
 			categoriaId: null,
 			parceiroId: null,
 			formaPagamentoId: null,
-			
-			// DESCRIÇÃO SIMPLIFICADA (Sem valor)
 			descricao: `Transferência para ${contaDestino}`,
-			
-			// OBSERVAÇÃO LIMPA (Sem ID de referência no texto)
 			observacoes: `SAÍDA por Transferência.`, 
-			referenciaTransferenciaId: transferenciaGrupoId, // Mantém a referência apenas internamente
+			referenciaTransferenciaId: transferenciaGrupoId,
 		};
 		batch.set(saidaDocRef, lancamentoSaida);
 		novosLancamentos.push(lancamentoSaida);
 		
-		// --- 2. Lançamento de ENTRADA (Receita na Conta de Destino) ---
 		const entradaDocRef = db.collection('lancamentos').doc();
 		const lancamentoEntrada = {
 			...lancamentoBase,
 			id: entradaDocRef.id,
-			tipo: 'receita', // Tipo de movimentação é Receita
-			contaId: lancamentoBase.contaDestinoId, // Conta de Destino
-			
-			// GARANTINDO A DATA CORRETA
+			tipo: 'receita',
+			contaId: lancamentoBase.contaDestinoId,
 			data: lancamentoBase.data,
-			
-			// Campos nulos/limpos
 			contaDestinoId: null,
 			categoriaId: null,
 			parceiroId: null,
 			formaPagamentoId: null,
-
-			// DESCRIÇÃO SIMPLIFICADA (Sem valor)
 			descricao: `Transferência de ${contaOrigem}`,
-			
-			// OBSERVAÇÃO LIMPA (Sem ID de referência no texto)
 			observacoes: `ENTRADA por Transferência.`,
 			referenciaTransferenciaId: transferenciaGrupoId,
 		};
 		batch.set(entradaDocRef, lancamentoEntrada);
 		novosLancamentos.push(lancamentoEntrada);
 
-		// Salvar os dois lançamentos no Firebase em lote (atomicamente)
 		await batch.commit();
 		showSuccess('Transferência realizada com sucesso!');
 
-		// AJUSTE DE SALDO IMEDIATO
 		const valorMovimento = lancamentoBase.valor;
-		await ajustarSaldoConta(lancamentoBase.contaId, valorMovimento * -1); // Saída (Débito da Origem)
-		await ajustarSaldoConta(lancamentoBase.contaDestinoId, valorMovimento); // Entrada (Crédito no Destino)
+		await ajustarSaldoConta(lancamentoBase.contaId, valorMovimento * -1);
+		await ajustarSaldoConta(lancamentoBase.contaDestinoId, valorMovimento);
 		
-		// Atualizar localmente
 		dataLancamentos.unshift(...novosLancamentos);
 		
-		// Se o modal estiver aberto na tela de lançamentos, recarrega
 		if (document.getElementById('lancamentos').style.display === 'block') {
 			carregarLancamentosMes();
 		}
 	}
-
-//-------------⚠️ atenção Correção ⚠️ -------------------------------------------------------------//
 
 		async function salvarLancamento() {
 			if (!currentUser) {
@@ -2274,7 +2128,6 @@
 				return;
 			}
 			
-			// NOVO: Diagnóstico visual se a validação falhar
 			if (!validarFormularioLancamento()) {
                 showError('Por favor, corrija os campos obrigatórios.');
 				return;
@@ -2284,46 +2137,22 @@
 			
 			try {
 				if (lancamentoEditando) {
-					// ************************************************
-					// LÓGICA DE REVERSÃO E AJUSTE DE SALDO AO EDITAR
-					// ************************************************
 					const antigoStatusPago = lancamentoEditando.pago;
 					const novoStatusPago = novosDados.pago;
 					
-					// 1. Detectar reversão de Status (de PAGO para NÃO PAGO)
 					if (antigoStatusPago && !novoStatusPago) {
-						// Se estava pago e agora não está, precisamos reverter o movimento!
-						const valorReverso = lancamentoEditando.valor * (lancamentoEditando.tipo === 'despesa' ? 1 : -1); // Inverter o sinal
-						
-						// Se for Transferência ou Despesa/Receita, a lógica é a mesma no novo modelo:
-						// Simplesmente reverte o valor na conta.
+						const valorReverso = lancamentoEditando.valor * (lancamentoEditando.tipo === 'despesa' ? 1 : -1); 
 						await ajustarSaldoConta(lancamentoEditando.contaId, valorReverso);
-						
-						// ATENÇÃO: Se for um registro de Transferência (Saída ou Entrada), a reversão no 
-						// registro do Firestore é suficiente, pois a outra ponta deve ser tratada pelo 
-						// usuário se ele quiser reverter a transferência inteira.
-						
 					} 
-					
-					// 2. Detectar novo pagamento (de NÃO PAGO para PAGO)
 					else if (!antigoStatusPago && novoStatusPago) {
-						// Se não estava pago e agora está, aplicar o movimento
 						const valorAplicar = lancamentoEditando.valor * (lancamentoEditando.tipo === 'despesa' ? -1 : 1);
-						
-						// Simplesmente aplica o valor na conta.
 						await ajustarSaldoConta(lancamentoEditando.contaId, valorAplicar);
 					}
 					
-					// Salvar a atualização do documento (Status, Descrição, etc.)
 					await atualizarLancamentoExistente(novosDados);
 					showSuccess('Lançamento atualizado com sucesso!');
 
-					// ************************************************
-					// FIM DA LÓGICA DE REVERSÃO E AJUSTE AO EDITAR
-					// ************************************************
-
 				} else {
-					// CRIAÇÃO DE NOVO LANÇAMENTO (Transferência é tratada dentro de criarNovoLancamento)
 					await criarNovoLancamento(novosDados);
 					showSuccess('Lançamento criado com sucesso!');
 				}
@@ -2331,10 +2160,7 @@
 				fecharModalLancamento();
 				invalidateCache(); 
 				
-			// TRATAMENTO DE SALDO APÓS CRIAÇÃO (Se for novo e pago, E NÃO FOR TRANSFERÊNCIA)
 			if (!lancamentoEditando && novosDados.pago && novosDados.tipo !== 'transferencia') {
-					
-				// Aqui, ajustamos Receita/Despesa simples (Transferência já ajustou o saldo no Passo 2)
 				const valorFinal = novosDados.valor * (novosDados.tipo === 'despesa' ? -1 : 1);
 				await ajustarSaldoConta(novosDados.contaId, valorFinal);
 			}
@@ -2363,13 +2189,11 @@
 			const dataParcela = new Date(dataBase);
 			dataParcela.setMonth(dataParcela.getMonth() + i);
 			
-			// Usamos o lancamentoBase (que agora tem o userId) e sobrescrevemos apenas o necessário
 			const lancamentoParcela = {
 			  ...lancamentoBase,
 			  valor: valorParcela,
 			  data: dataParcela.toISOString().slice(0, 10),
 			  parcelaAtual: i + 1,
-			  // Novo formato de observação para incluir a parcela
 			  observacoes: `${lancamentoBase.observacoes || ''} (Parcela ${i + 1}/${numeroParcelas})`.trim(), 
 			  dataAtualizacao: firebase.firestore.FieldValue.serverTimestamp()
 			};
@@ -2380,12 +2204,10 @@
 			novosLancamentos.push({ id: docRef.id, ...lancamentoParcela });
 			}
 		  
-		 await batch.commit(); // ✅ O commit do lote agora deve passar na regra de segurança
+		 await batch.commit(); 
 		  
-		 // Adicionar localmente
 		 dataLancamentos.unshift(...novosLancamentos);
 		  
-		 // ✅ CORREÇÃO: Forçar atualização imediata da tela se estiver visível
 		 if (document.getElementById('lancamentos').style.display === 'block') {
 			  carregarLancamentosMes();
 		 }
@@ -2394,7 +2216,6 @@
     function editarLancamento(lancamentoId) {
       abrirFormLancamento(lancamentoId);
     }
-
 
 		async function excluirLancamento(lancamentoId) {
 		if (!confirm('Tem certeza que deseja excluir este lançamento?')) {
@@ -2405,25 +2226,13 @@
 		if (!lancamento) return;
 		
 		try {
-			// ************************************************
-			// NOVO: LÓGICA DE REVERSÃO ANTES DE EXCLUIR (SIMPLIFICADO)
-			// ************************************************
 			if (lancamento.pago) {
-				// Se o lançamento estava pago, aplicamos a reversão.
-				// O valor reverso de uma Despesa (tipo: 'despesa') é positivo.
-				// O valor reverso de uma Receita (tipo: 'receita') é negativo.
-				
-				// 1. Calcular o valor reverso
 				const valorReverso = lancamento.valor * (lancamento.tipo === 'despesa' ? 1 : -1); 
-				
-				// 2. Ajustamos o saldo da conta vinculada a este registro.
 				await ajustarSaldoConta(lancamento.contaId, valorReverso);
 			}
-			// ************************************************
 			
 			await db.collection('lancamentos').doc(lancamentoId).delete();
 			
-			// Remover localmente
 			dataLancamentos = dataLancamentos.filter(l => l.id !== lancamentoId);
 			invalidateCache();
 			carregarLancamentosMes();
@@ -2579,14 +2388,12 @@
             return;
         }
         
-        // Validações
         const nome = document.getElementById('ct_nome').value.trim();
         const tipo = document.getElementById('ct_tipo').value;
         const valor = parseFloat(document.getElementById('ct_valor').value || 0);
         const descricao = document.getElementById('ct_descricao').value.trim();
         const ativo = document.getElementById('ct_ativo').value === 'true';
         
-        // Validar campos obrigatórios
         if (!nome) {
             document.getElementById('error-nome-conta').textContent = 'Nome é obrigatório';
             document.getElementById('error-nome-conta').classList.add('visible');
@@ -2607,17 +2414,14 @@
         
         try {
             if (contaId) {
-                // Editar conta existente
                 await db.collection('contas').doc(contaId).update(contaData);
                 
-                // Atualizar localmente
                 const index = dataSaldos.findIndex(c => c.id === contaId);
                 if (index !== -1) {
                     dataSaldos[index] = { ...dataSaldos[index], ...contaData };
                 }
                 showSuccess('Conta atualizada com sucesso!');
             } else {
-                // Nova conta
                 contaData.dataCriacao = firebase.firestore.FieldValue.serverTimestamp();
                 const docRef = await db.collection('contas').add(contaData);
                 contaData.id = docRef.id;
@@ -2630,7 +2434,6 @@
             renderTabelaContas();
             renderDashboard();
             renderSaldos();
-            // ATUALIZADO: Atualizar contas pendentes
             atualizarCardsContasPendentes();
             
         } catch (error) {
@@ -2648,7 +2451,6 @@
         
         if (!conta) return;
         
-        // Verificar se existem lançamentos vinculados a esta conta
         const lancamentosComConta = dataLancamentos.filter(l => l.contaId === contaId);
         if (lancamentosComConta.length > 0) {
             const confirmar = confirm(`Esta conta está sendo usada em ${lancamentosComConta.length} lançamento(s). Deseja realmente excluir?`);
@@ -2662,13 +2464,11 @@
         try {
             await db.collection('contas').doc(contaId).delete();
             
-            // Remover localmente
             dataSaldos = dataSaldos.filter(c => c.id !== contaId);
             invalidateCache();
             renderTabelaContas();
             renderDashboard();
             renderSaldos();
-            // ATUALIZADO: Atualizar contas pendentes
             atualizarCardsContasPendentes();
             showSuccess('Conta excluída com sucesso!');
             
@@ -2766,11 +2566,9 @@
             return;
         }
         
-        // Validações
         const descricao = document.getElementById('s_descricao').value.trim();
         const ativo = document.getElementById('s_ativo').value === 'true';
         
-        // Validar campos obrigatórios
         if (!descricao) {
             document.getElementById('error-descricao-setor').textContent = 'Descrição é obrigatória';
             document.getElementById('error-descricao-setor').classList.add('visible');
@@ -2779,7 +2577,6 @@
             document.getElementById('error-descricao-setor').classList.remove('visible');
         }
         
-        // Verificar se já existe setor com mesma descrição
         const setorExistente = dataSetores.find(s => 
             s.descricao.toLowerCase() === descricao.toLowerCase() && 
             s.id !== setorId
@@ -2800,17 +2597,14 @@
         
         try {
             if (setorId) {
-                // Editar setor existente
                 await db.collection('setores').doc(setorId).update(setorData);
                 
-                // Atualizar localmente
                 const index = dataSetores.findIndex(s => s.id === setorId);
                 if (index !== -1) {
                     dataSetores[index] = { ...dataSetores[index], ...setorData };
                 }
                 showSuccess('Setor atualizado com sucesso!');
             } else {
-                // Novo setor
                 setorData.dataCriacao = firebase.firestore.FieldValue.serverTimestamp();
                 const docRef = await db.collection('setores').add(setorData);
                 setorData.id = docRef.id;
@@ -2837,7 +2631,6 @@
         
         if (!setor) return;
         
-        // Verificar se existem lançamentos vinculados a este setor
         const lancamentosComSetor = dataLancamentos.filter(l => l.setorId === setorId);
         if (lancamentosComSetor.length > 0) {
             const confirmar = confirm(`Este setor está sendo usado em ${lancamentosComSetor.length} lançamento(s). Deseja realmente excluir?`);
@@ -2851,7 +2644,6 @@
         try {
             await db.collection('setores').doc(setorId).delete();
             
-            // Remover localmente
             dataSetores = dataSetores.filter(s => s.id !== setorId);
             invalidateCache();
             renderTabelaSetores();
@@ -2887,7 +2679,6 @@
         categoriasFiltradas.forEach(categoria => {
             const tr = document.createElement('tr');
             
-            // Buscar nome do setor baseado no setorId
             const setorNome = categoria.setorId ? 
                 (dataSetores.find(s => s.id === categoria.setorId)?.descricao || 'Setor não encontrado') : 
                 '---';
@@ -2943,7 +2734,6 @@
         const categoria = categoriaId ? dataCategorias.find(c => c.id === categoriaId) : null;
         const body = document.getElementById('modal-body');
         
-        // Filtrar setores ativos para o dropdown
         const setoresAtivos = dataSetores.filter(s => s.ativo);
         
         body.innerHTML = `
@@ -3016,7 +2806,6 @@
             </div>
         `;
         
-        // Sincronizar campos de cor
         document.getElementById('c_cor').addEventListener('input', function(e) {
             document.getElementById('c_cor_text').value = e.target.value;
         });
@@ -3034,7 +2823,6 @@
             return;
         }
         
-        // Validações
         const nome = document.getElementById('c_nome').value.trim();
         const tipo = document.getElementById('c_tipo').value;
         const cor = document.getElementById('c_cor').value;
@@ -3042,7 +2830,6 @@
         const descricao = document.getElementById('c_descricao').value.trim();
         const ativo = document.getElementById('c_ativo').value === 'true';
         
-        // Validar campos obrigatórios
         if (!nome) {
             document.getElementById('error-nome-categoria').textContent = 'Nome é obrigatório';
             document.getElementById('error-nome-categoria').classList.add('visible');
@@ -3051,7 +2838,6 @@
             document.getElementById('error-nome-categoria').classList.remove('visible');
         }
         
-        // Verificar se já existe categoria com mesmo nome e tipo
         const categoriaExistente = dataCategorias.find(c => 
             c.nome.toLowerCase() === nome.toLowerCase() && 
             c.tipo === tipo && 
@@ -3077,7 +2863,6 @@
         
         try {
             if (categoriaId) {
-                // Editar categoria existente - preservar campo 'padrao' se existir
                 const categoriaOriginal = dataCategorias.find(c => c.id === categoriaId);
                 if (categoriaOriginal && categoriaOriginal.padrao) {
                     categoriaData.padrao = true;
@@ -3085,14 +2870,12 @@
                 
                 await db.collection('categorias').doc(categoriaId).update(categoriaData);
                 
-                // Atualizar localmente
                 const index = dataCategorias.findIndex(c => c.id === categoriaId);
                 if (index !== -1) {
                     dataCategorias[index] = { ...dataCategorias[index], ...categoriaData };
                 }
                 showSuccess('Categoria atualizada com sucesso!');
             } else {
-                // Nova categoria
                 categoriaData.dataCriacao = firebase.firestore.FieldValue.serverTimestamp();
                 const docRef = await db.collection('categorias').add(categoriaData);
                 categoriaData.id = docRef.id;
@@ -3119,13 +2902,11 @@
         
         if (!categoria) return;
         
-        // Impedir exclusão de categorias padrão
         if (categoria.padrao) {
             showError('Categorias padrão do sistema não podem ser excluídas.');
             return;
         }
         
-        // Verificar se existem lançamentos usando esta categoria
         const lancamentosComCategoria = dataLancamentos.filter(l => l.categoriaId === categoriaId);
         if (lancamentosComCategoria.length > 0) {
             const confirmar = confirm(`Esta categoria está sendo usada em ${lancamentosComCategoria.length} lançamento(s). Deseja realmente excluir?`);
@@ -3139,7 +2920,6 @@
         try {
             await db.collection('categorias').doc(categoriaId).delete();
             
-            // Remover localmente
             dataCategorias = dataCategorias.filter(c => c.id !== categoriaId);
             invalidateCache();
             renderTabelaCategorias();
@@ -3341,7 +3121,6 @@
             </div>
         `;
         
-        // Inicializar campos baseados no tipo
         toggleTipoDocumento();
         
         abrirModal(parceiroId ? 'Editar Parceiro' : 'Novo Parceiro');
@@ -3393,7 +3172,6 @@
             return false;
         }
         
-        // Validação simples de CPF
         if (/^(\d)\1{10}$/.test(cpf)) {
             errorElement.textContent = 'CPF inválido';
             errorElement.classList.add('visible');
@@ -3512,7 +3290,6 @@
             const data = await response.json();
             
             if (!data.erro) {
-                // Preencher automaticamente os campos de endereço
                 document.getElementById('p_logradouro').value = data.logradouro || '';
                 document.getElementById('p_bairro').value = data.bairro || '';
                 document.getElementById('p_cidade').value = data.localidade || '';
@@ -3535,7 +3312,6 @@
             return;
         }
         
-        // Validações
         const nome = document.getElementById('p_nome').value.trim();
         const tipo = document.getElementById('p_tipo').value;
         const cpf = tipo === 'fisica' ? document.getElementById('p_cpf').value : '';
@@ -3550,7 +3326,6 @@
         const observacoes = document.getElementById('p_observacoes').value;
         const ativo = document.getElementById('p_ativo').value === 'true';
         
-        // Validar campos obrigatórios
         if (!nome) {
             document.getElementById('error-nome').textContent = 'Nome é obrigatório';
             document.getElementById('error-nome').classList.add('visible');
@@ -3582,17 +3357,14 @@
         
         try {
             if (parceiroId) {
-                // Editar parceiro existente
                 await db.collection('parceiros').doc(parceiroId).update(parceiroData);
                 
-                // Atualizar localmente
                 const index = dataParceiros.findIndex(p => p.id === parceiroId);
                 if (index !== -1) {
                     dataParceiros[index] = { ...dataParceiros[index], ...parceiroData };
                 }
                 showSuccess('Parceiro atualizado com sucesso!');
             } else {
-                // Novo parceiro
                 parceiroData.dataCriacao = firebase.firestore.FieldValue.serverTimestamp();
                 const docRef = await db.collection('parceiros').add(parceiroData);
                 parceiroData.id = docRef.id;
@@ -3622,7 +3394,6 @@
         try {
             await db.collection('parceiros').doc(parceiroId).delete();
             
-            // Remover localmente
             dataParceiros = dataParceiros.filter(p => p.id !== parceiroId);
             invalidateCache();
             renderTabelaParceiros();
@@ -3759,17 +3530,14 @@
         
         try {
             if (formaId) {
-                // Editar forma existente
                 await db.collection('formasPagamento').doc(formaId).update(formaData);
                 
-                // Atualizar localmente
                 const index = dataFormasPagamento.findIndex(f => f.id === formaId);
                 if (index !== -1) {
                     dataFormasPagamento[index] = { ...dataFormasPagamento[index], ...formaData };
                 }
                 showSuccess('Forma de pagamento atualizada com sucesso!');
             } else {
-                // Nova forma
                 formaData.dataCriacao = firebase.firestore.FieldValue.serverTimestamp();
                 const docRef = await db.collection('formasPagamento').add(formaData);
                 formaData.id = docRef.id;
@@ -3799,7 +3567,6 @@
         try {
             await db.collection('formasPagamento').doc(formaId).delete();
             
-            // Remover localmente
             dataFormasPagamento = dataFormasPagamento.filter(f => f.id !== formaId);
             invalidateCache();
             renderTabelaFormasPagamento();
@@ -3820,17 +3587,10 @@
     
 	function formatDate(d){ 
 		if (!d) return '---'; 
-		
-		// Adicionar um pequeno offset para garantir que a data não retroceda no fuso horário local.
-		// O ideal é criar a data sem a conversão automática de fuso horário.
-		const parts = d.split('-'); // d é 'YYYY-MM-DD'
-		
-		// Cria a data localmente: (Ano, Mês - 1, Dia)
+		const parts = d.split('-'); 
 		const dt = new Date(parts[0], parts[1] - 1, parts[2]); 
 		
-		// Fallback de segurança para quem está lendo a data
 		if (isNaN(dt)) {
-			// Se a construção acima falhar (o que é raro), tenta a conversão padrão
 			const fallbackDt = new Date(d); 
 			return fallbackDt.toLocaleDateString('pt-BR'); 
 		}
@@ -3840,23 +3600,17 @@
 	
 	function getTodayString() {
 		const today = new Date();
-		
-		// Obter o ano, mês e dia da data LOCAL
 		const year = today.getFullYear();
-		// O mês começa em 0 (Janeiro), então somamos 1 e garantimos 2 dígitos
 		const month = String(today.getMonth() + 1).padStart(2, '0'); 
-		// Garantir 2 dígitos para o dia
 		const day = String(today.getDate()).padStart(2, '0');
-
-		// Retorna a data no formato YYYY-MM-DD (padrão do campo de data HTML)
 		return `${year}-${month}-${day}`;
 	}
     
     function sumByType(tipo){ 
-    return dataLancamentos
-        // NOVO FILTRO: Ignora qualquer lançamento que seja parte de uma transferência
-        .filter(l => l.tipo === tipo && !l.referenciaTransferenciaId)
-        .reduce((s, x) => s + (x.valor || 0), 0); 
+        // Esta função soma TODO O HISTÓRICO (usada para saldo e cálculos gerais)
+        return dataLancamentos
+            .filter(l => l.tipo === tipo && !l.referenciaTransferenciaId)
+            .reduce((s, x) => s + (x.valor || 0), 0); 
 	}
     
     function calcSaldo(){ 
@@ -3874,83 +3628,173 @@
         document.getElementById('modal-form').style.display = 'none';
     }
 
-    // ---------- GRÁFICO ----------
+    // ---------- GRÁFICOS (ATUALIZADO) ----------
     
-	let chartObj = null;
 	function initChart(){
-		const canvas = document.getElementById('chartFluxo');
-		if (!canvas) return;
-		
-		// Destruir gráfico anterior se existir
-		if (chartObj) {
-			chartObj.destroy();
-			chartObj = null;
-		}
-		
-		const ctx = canvas.getContext('2d');
-		
-		// Dados de exemplo - você pode substituir por dados real
-		// Dados de exemplo - você pode substituir por dados reais posteriormente
-		const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
-		const receitas = [3200, 2800, 3500, 4200, 3800, 4500];
-		const despesas = [1800, 2200, 1900, 2100, 2400, 2000];
-		
-		try {
-			chartObj = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: meses,
-					datasets: [
-						{
-							label: 'Receitas',
-							data: receitas,
-							fill: true,
-							tension: 0.35,
-							borderWidth: 2,
-							borderColor: '#2ECC71',
-							backgroundColor: 'rgba(46, 204, 113, 0.1)'
-						},
-						{
-							label: 'Despesas',
-							data: despesas,
-							fill: false,
-							tension: 0.35,
-							borderWidth: 2,
-							borderColor: '#E74C3C'
-						}
-					]
-				},
-				options: {
-					responsive: true,
-					maintainAspectRatio: false,
-					plugins: {
-						legend: {
-							display: true
-						}
-					},
-					scales: {
-						y: {
-							beginAtZero: true,
-							ticks: {
-								callback: function(v) {
-									return 'R$ ' + v.toLocaleString('pt-BR');
-								}
-							}
-						}
-					}
-				}
-			});
-		} catch (error) {
-        console.error('❌ Erro ao criar gráfico:', error);
-    }
-}
+        // --- GRÁFICO 1: LINHA (Fluxo de Caixa 6 Meses) ---
+        const canvasFluxo = document.getElementById('chartFluxo');
+        if (canvasFluxo) {
+            if (chartFluxoObj) chartFluxoObj.destroy();
+            
+            const mesesLabels = [];
+            const dadosReceita = [];
+            const dadosDespesa = [];
+            const hoje = new Date();
+            
+            for (let i = 5; i >= 0; i--) {
+                const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+                mesesLabels.push(d.toLocaleDateString('pt-BR', { month: 'short' }));
+                
+                const totalRec = dataLancamentos
+                    .filter(l => {
+                        const lData = new Date(l.data + 'T00:00:00');
+                        return l.tipo === 'receita' && !l.referenciaTransferenciaId &&
+                               lData.getMonth() === d.getMonth() && 
+                               lData.getFullYear() === d.getFullYear();
+                    })
+                    .reduce((acc, l) => acc + l.valor, 0);
 
-function destroyChart() {
-    if (chartObj) {
-        chartObj.destroy();
-        chartObj = null;
+                const totalDesp = dataLancamentos
+                    .filter(l => {
+                        const lData = new Date(l.data + 'T00:00:00');
+                        return l.tipo === 'despesa' && !l.referenciaTransferenciaId &&
+                               lData.getMonth() === d.getMonth() && 
+                               lData.getFullYear() === d.getFullYear();
+                    })
+                    .reduce((acc, l) => acc + l.valor, 0);
+
+                dadosReceita.push(totalRec);
+                dadosDespesa.push(totalDesp);
+            }
+
+            const ctxFluxo = canvasFluxo.getContext('2d');
+            chartFluxoObj = new Chart(ctxFluxo, {
+                type: 'line',
+                data: {
+                    labels: mesesLabels,
+                    datasets: [
+                        {
+                            label: 'Receitas',
+                            data: dadosReceita,
+                            tension: 0.3,
+                            borderColor: '#2ECC71',
+                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                            fill: true
+                        },
+                        {
+                            label: 'Despesas',
+                            data: dadosDespesa,
+                            tension: 0.3,
+                            borderColor: '#E74C3C',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // --- GRÁFICO 2: PIZZA (Categorias do Mês Atual) ---
+        const canvasPizza = document.getElementById('chartCategorias');
+        if (canvasPizza) {
+            if (chartPizzaObj) chartPizzaObj.destroy();
+            
+            const mapaCats = {};
+            
+            dataLancamentos.forEach(l => {
+                if (l.tipo === 'despesa' && !l.referenciaTransferenciaId && isMesAtual(l.data)) {
+                    const catId = l.categoriaId || 'outros';
+                    if (!mapaCats[catId]) mapaCats[catId] = 0;
+                    mapaCats[catId] += l.valor;
+                }
+            });
+
+            const labels = [];
+            const dados = [];
+            const cores = [];
+
+            Object.keys(mapaCats).forEach(catId => {
+                if(catId === 'outros') {
+                    labels.push('Sem Categoria');
+                    cores.push('#95A5A6');
+                } else {
+                    const catObj = dataCategorias.find(c => c.id === catId);
+                    if (catObj) {
+                        labels.push(catObj.nome);
+                        cores.push(catObj.cor || '#E74C3C');
+                    } else {
+                        labels.push('Categoria Excluída');
+                        cores.push('#95A5A6');
+                    }
+                }
+                dados.push(mapaCats[catId]);
+            });
+            
+            if (dados.length === 0) {
+                labels.push("Sem despesas este mês");
+                dados.push(1);
+                cores.push("#E6E6E6");
+            }
+
+            const ctxPizza = canvasPizza.getContext('2d');
+            chartPizzaObj = new Chart(ctxPizza, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dados,
+                        backgroundColor: cores,
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { boxWidth: 10, font: { size: 11 } }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label === "Sem despesas este mês") return label;
+                                    if (label) label += ': ';
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
-}
+
+    function destroyChart() {
+        if (chartFluxoObj) {
+            chartFluxoObj.destroy();
+            chartFluxoObj = null;
+        }
+        if (chartPizzaObj) {
+            chartPizzaObj.destroy();
+            chartPizzaObj = null;
+        }
+    }
 
     // ---------- ANIMAÇÕES ----------
     
@@ -3973,16 +3817,6 @@ function destroyChart() {
         setTimeout(() => el.classList.add('visible'), 10);
     }
     
-    function animateKPIs(){
-        const saldoGeral = document.getElementById('saldo-geral');
-        const receitasMes = document.getElementById('receitas-mes');
-        const despesasMes = document.getElementById('despesas-mes');
-        
-        if (saldoGeral) animateValue(saldoGeral, calcSaldo());
-        if (receitasMes) animateValue(receitasMes, sumByType('receita'));
-        if (despesasMes) animateValue(despesasMes, sumByType('despesa'));
-    }
-
     // ---------- INICIALIZAÇÃO ----------
     
     document.addEventListener('DOMContentLoaded', async () => {
@@ -4006,7 +3840,7 @@ function destroyChart() {
             });
         });
 
-        // Botão Novo ATUALIZADO
+        // Botão Novo
         document.getElementById('btn-novo')?.addEventListener('click', () => {
             const screenAtiva = document.querySelector('.screen[style="display: block"]')?.id || 
                               document.querySelector('.screen:not([style])')?.id;
