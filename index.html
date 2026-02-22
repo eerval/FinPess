@@ -1778,20 +1778,82 @@
             padding: 8px 12px !important;
         }
 
-        /* 2. Filtros Desembolados (Layout de Grid Perfeito) */
+        /* 2. Filtros em Pílulas Roláveis (Estilo Apple Fitness) */
         .filtros-grid-compacta {
-            grid-template-columns: 1fr 1fr !important; /* 2 itens por linha */
-            gap: 12px !important;
-            padding: 15px !important;
+            display: flex !important;
+            flex-wrap: nowrap !important; /* Força tudo em uma linha horizontal */
+            overflow-x: auto !important; /* Habilita o arrastar para o lado */
+            gap: 10px !important;
+            padding: 5px 15px 15px 15px !important;
+            -webkit-overflow-scrolling: touch;
+            border: none !important;
+            align-items: center !important;
         }
 
-        .filtros-grid-compacta .col-busca-larga,
-        .filtros-grid-compacta .col-periodo,
-        .filtros-grid-compacta .btn-limpar {
-            grid-column: span 2 !important; /* Busca, Data e Botão ocupam a tela toda */
+        /* Esconde a barra de rolagem feia */
+        .filtros-grid-compacta::-webkit-scrollbar { display: none; }
+
+        /* Esconde os títulos (labels) para deixar o visual limpo */
+        .filtros-grid-compacta label {
+            display: none !important;
         }
-        
-        .input-group-datas { flex-wrap: nowrap !important; }
+
+        /* Prepara as "Pílulas" para não encolherem */
+        .filtros-grid-compacta > div,
+        .filtros-grid-compacta .btn-limpar,
+        .col-busca-larga {
+            flex: 0 0 auto !important; 
+            width: auto !important; 
+            min-width: max-content !important;
+            grid-column: auto !important; /* Anula a regra do grid antigo */
+        }
+
+        /* O formato "Pílula" (Pill) idêntico ao da Apple */
+        .filtros-grid-compacta input,
+        .filtros-grid-compacta select,
+        .filtros-grid-compacta .btn-limpar {
+            border-radius: 25px !important; /* Cantos totalmente redondos */
+            background: var(--bg) !important; /* Fundo cinza suave */
+            border: 1px solid transparent !important;
+            padding: 8px 18px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            height: 40px !important;
+            box-shadow: none !important;
+            color: var(--text-color) !important;
+            text-align: center;
+        }
+
+        /* Ajuste fino para a busca ficar um pouco mais larguinha */
+        .col-busca-larga input {
+            min-width: 150px !important;
+        }
+
+        /* Datas grudadas parecendo uma pílula dupla */
+        .input-group-datas {
+            display: flex !important;
+            gap: 5px !important;
+            align-items: center !important;
+            background: var(--bg) !important;
+            border-radius: 25px !important;
+            padding: 0 10px !important;
+            height: 40px !important;
+        }
+        .input-group-datas input {
+            background: transparent !important;
+            padding: 0 !important;
+            height: auto !important;
+        }
+        .input-group-datas span {
+            display: none !important; /* Esconde a letra "a" entre as datas */
+        }
+
+        /* Botão Limpar discreto e elegante */
+        .filtros-grid-compacta .btn-limpar {
+            background: rgba(239, 68, 68, 0.08) !important;
+            color: var(--danger) !important;
+            padding: 8px 20px !important;
+        }
 
        /* 3. KPIs em formato de CARROSSEL (Arraste para o lado) */
         #container-kpis-lancamentos {
@@ -1860,55 +1922,86 @@
     }
 	
 	/* =========================================================
-       📱 CORREÇÃO DA LISTA DE LANÇAMENTOS (MOBILE)
-       ========================================================= */
-    @media (max-width: 600px) {
-        .lancamento-card { 
-            padding: 14px 12px !important; 
-            gap: 12px !important; 
-            flex-wrap: wrap !important; /* O segredo: permite quebrar linha! */
-        }
-        
-        .cat-icon { 
-            width: 40px !important; 
-            height: 40px !important; 
-            font-size: 16px !important; 
-        }
-        
-        /* 1º Andar: Descrição e Valores ocupando o topo com folga */
-        .lancamento-info { 
-            flex: 1 1 auto !important; 
-            min-width: 0 !important; /* Impede que o texto estoure o limite */
-        }
-        
-        .lancamento-meta {
-            flex-wrap: wrap !important; /* Permite que Categoria/Parceiro desçam uma linha se precisar */
-            gap: 4px 6px !important;
-            line-height: 1.2 !important;
-        }
-        
-        .lancamento-values { 
-            flex-shrink: 0 !important;
-        }
-        
-        /* 2º Andar: Botões de Ação na base do cartão */
-        .lancamento-actions { 
-            width: 100% !important; /* Força os botões para a linha de baixo */
-            margin: 0 !important;
-            padding-top: 10px !important;
-            margin-top: 2px !important;
-            border-top: 1px dashed var(--border) !important; /* Linha divisória charmosa */
-            justify-content: flex-end !important; /* Alinha na direita */
-            gap: 12px !important; /* Espaço amigável para os dedos */
-        }
-        
-        .lancamento-actions .btn { 
-            padding: 6px 14px !important; 
-            font-size: 14px !important;
-            background: var(--bg) !important; /* Fundo suave para parecer botão tocável */
-            border-radius: 8px !important;
-        }
-    }
+   📱 REDESIGN DOS CARDS ESTILO "APPLE FITNESS" (MOBILE)
+   ========================================================= */
+	@media (max-width: 600px) {
+		/* 1. Card Limpo e Moderno (Com Contorno de Destaque) */
+		.lancamento-card {
+			padding: 15px !important;
+			gap: 15px !important;
+			flex-wrap: nowrap !important;
+			align-items: center !important;
+			border-radius: 16px !important;
+			background: var(--panel) !important;
+			
+			/* A MÁGICA DO DESTAQUE PARA TEMA CLARO E ESCURO */
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important; /* Sombra um pouco mais forte para o claro */
+			border: 1px solid rgba(128, 128, 128, 0.2) !important; /* Borda cinza semi-transparente que salva o escuro! */
+		}
+		
+		/* 2. Ícone Circular Grande */
+		.cat-icon {
+			width: 50px !important;
+			height: 50px !important;
+			font-size: 20px !important;
+			border-radius: 50% !important; /* Círculo perfeito */
+			flex-shrink: 0 !important;
+		}
+		
+		/* 3. Bloco Central (Descrição e Info Secundária) */
+		.lancamento-info {
+			flex: 1 1 auto !important; /* Ocupa o espaço central */
+			display: flex !important;
+			flex-direction: column !important; /* Empilha os textos */
+			gap: 4px !important; /* Espaço pequeno entre título e subtítulo */
+			min-width: 0 !important;
+		}
+		
+		/* Título Principal */
+		.lancamento-info strong {
+			font-size: 16px !important;
+			font-weight: 600 !important;
+			white-space: nowrap !important;
+			overflow: hidden !important;
+			text-overflow: ellipsis !important; /* Reticências (...) se for longo */
+		}
+		
+		/* Subtítulo (Categoria/Parceiro) - Estilo discreto da Apple */
+		.lancamento-meta {
+			font-size: 13px !important;
+			color: var(--muted) !important; /* Cor cinza */
+			font-weight: 400 !important;
+			flex-wrap: nowrap !important;
+			white-space: nowrap !important;
+			overflow: hidden !important;
+			text-overflow: ellipsis !important;
+			gap: 5px !important;
+		}
+		/* Esconde o separador "•" para ficar mais limpo */
+		.lancamento-meta span:nth-child(2) { display: none !important; }
+
+		/* 4. Bloco da Direita (Valor em Super Destaque) */
+		.lancamento-values {
+			flex-shrink: 0 !important;
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: flex-end !important; /* Alinha tudo à direita */
+		}
+		
+		/* O VALOR GRANDE */
+		.lancamento-valor {
+			font-size: 20px !important; /* Fonte bem maior! */
+			font-weight: 800 !important; /* Negrito extra */
+			letter-spacing: -0.5px !important; /* Letras mais juntinhas, moderno */
+		}
+
+		/* 5. Ocultar a "sujeira" visual */
+		.lancamento-actions, /* Barra de botões inferior */
+		.btn-pagar-icon,     /* Botão de check/seta solto */
+		.lancamento-card hr { /* Linha divisória */
+			display: none !important;
+		}
+	}
 	
 	/* --- OCULTAR BOTÃO DE EDITAR NO CELULAR (O CARD JÁ É CLICÁVEL) --- */
     @media (max-width: 768px) {
@@ -1947,6 +2040,16 @@
         .content {
             padding-bottom: 130px !important; 
         }
+    }
+	
+	/* =========================================================
+       🌙 DESTAQUE DOS CARDS NO TEMA ESCURO (MOBILE E DESKTOP)
+       ========================================================= */
+    :root[data-theme='dark'] .lancamento-card {
+        background-color: #1E293B !important; /* Garante a cor exata do painel e não deixa ficar transparente */
+        background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)) !important; /* Filtro de luz suave */
+        border: 1px solid rgba(255, 255, 255, 0.15) !important; /* Borda branca fina e elegante */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important; /* Sombra densa */
     }
 			
    </style>
@@ -2326,7 +2429,7 @@
 			  <div>
 				<label style="font-size: 10px; color: var(--muted); margin-bottom: 4px; display: block;">Tipo</label>
 				<select id="filtro-tipo-lancamento" onchange="filtrarLancamentos()">
-				  <option value="">Todos</option>
+				  <option value="">Todos os Tipos</option>
 				  <option value="receita">Receita</option>
 				  <option value="despesa">Despesa</option>
 				  <option value="transferencia">Transferência</option>
@@ -2336,7 +2439,7 @@
 			  <div>
 				<label style="font-size: 10px; color: var(--muted); margin-bottom: 4px; display: block;">Status</label>
 				<select id="filtro-status-lancamento" onchange="filtrarLancamentos()">
-				  <option value="">Todos</option>
+				  <option value="">Todos os Status</option>
 				  <option value="realizado">Realizado</option>
 				  <option value="nao-realizado">Pendente</option>
 				</select>
