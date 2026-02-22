@@ -1858,6 +1858,96 @@
             z-index: 10 !important;
         }
     }
+	
+	/* =========================================================
+       📱 CORREÇÃO DA LISTA DE LANÇAMENTOS (MOBILE)
+       ========================================================= */
+    @media (max-width: 600px) {
+        .lancamento-card { 
+            padding: 14px 12px !important; 
+            gap: 12px !important; 
+            flex-wrap: wrap !important; /* O segredo: permite quebrar linha! */
+        }
+        
+        .cat-icon { 
+            width: 40px !important; 
+            height: 40px !important; 
+            font-size: 16px !important; 
+        }
+        
+        /* 1º Andar: Descrição e Valores ocupando o topo com folga */
+        .lancamento-info { 
+            flex: 1 1 auto !important; 
+            min-width: 0 !important; /* Impede que o texto estoure o limite */
+        }
+        
+        .lancamento-meta {
+            flex-wrap: wrap !important; /* Permite que Categoria/Parceiro desçam uma linha se precisar */
+            gap: 4px 6px !important;
+            line-height: 1.2 !important;
+        }
+        
+        .lancamento-values { 
+            flex-shrink: 0 !important;
+        }
+        
+        /* 2º Andar: Botões de Ação na base do cartão */
+        .lancamento-actions { 
+            width: 100% !important; /* Força os botões para a linha de baixo */
+            margin: 0 !important;
+            padding-top: 10px !important;
+            margin-top: 2px !important;
+            border-top: 1px dashed var(--border) !important; /* Linha divisória charmosa */
+            justify-content: flex-end !important; /* Alinha na direita */
+            gap: 12px !important; /* Espaço amigável para os dedos */
+        }
+        
+        .lancamento-actions .btn { 
+            padding: 6px 14px !important; 
+            font-size: 14px !important;
+            background: var(--bg) !important; /* Fundo suave para parecer botão tocável */
+            border-radius: 8px !important;
+        }
+    }
+	
+	/* --- OCULTAR BOTÃO DE EDITAR NO CELULAR (O CARD JÁ É CLICÁVEL) --- */
+    @media (max-width: 768px) {
+        /* Caça exatamente o botão que chama a função de editar e esconde ele */
+        .lancamento-actions button[onclick^="editarLancamento"] {
+            display: none !important;
+        }
+    }
+	
+	/* --- CORREÇÃO: FORÇAR OCULTAÇÃO DO BOTÃO FLUTUANTE EM OUTRAS TELAS (MOBILE) --- */
+    @media (max-width: 768px) {
+        /* A junção do ID com a classe vence a briga de prioridade do CSS! */
+        #btn-novo-lancamento.esconder-fab {
+            display: none !important;
+        }
+    }
+	
+	/* =========================================================
+       🍏 CORREÇÃO DE CONFLITO COM GESTOS DO IPHONE (HOME INDICATOR)
+       ========================================================= */
+    @media (max-width: 768px) {
+        /* Aumenta a barra inferior e empurra os botões de menu para cima */
+        .mobile-nav-bar {
+            height: auto !important; /* Tira a limitação de altura antiga */
+            padding-top: 15px !important;
+            /* A mágica: Dá 25px de folga extra + o espaço seguro exigido pela Apple */
+            padding-bottom: calc(25px + env(safe-area-inset-bottom)) !important; 
+        }
+
+        /* Sobe o botão flutuante (+) para acompanhar a nova altura da barra */
+        #btn-novo-lancamento {
+            bottom: 115px !important; 
+        }
+
+        /* Aumenta o respiro no final da página para os últimos cartões não ficarem escondidos */
+        .content {
+            padding-bottom: 130px !important; 
+        }
+    }
 			
    </style>
 </head>
